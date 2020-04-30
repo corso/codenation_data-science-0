@@ -36,70 +36,65 @@ black_friday.head()
 # 
 # Quantas observações e quantas colunas há no dataset? Responda no formato de uma tuple `(n_observacoes, n_colunas)`.
 
-# In[6]:
+# In[1]:
 
 
 def q1():
-    return black_friday.shape    
-    pass
+    return black_friday.shape
 
 
 # ## Questão 2
 # 
 # Há quantas mulheres com idade entre 26 e 35 anos no dataset? Responda como um único escalar.
 
-# In[7]:
+# In[2]:
 
 
 def q2():
     df_q2 = black_friday.groupby('Age')['Gender'].value_counts()
     return int(df_q2['26-35']['F'])
-    pass
 
 
 # ## Questão 3
 # 
 # Quantos usuários únicos há no dataset? Responda como um único escalar.
 
-# In[64]:
+# In[3]:
 
 
 def q3():
     return int(black_friday['User_ID'].nunique())
-    pass
 
 
 # ## Questão 4
 # 
 # Quantos tipos de dados diferentes existem no dataset? Responda como um único escalar.
 
-# In[9]:
+# In[4]:
 
 
 def q4():
     return black_friday.dtypes.nunique()
-    pass
 
 
 # ## Questão 5
 # 
 # Qual porcentagem dos registros possui ao menos um valor null (`None`, `ǸaN` etc)? Responda como um único escalar entre 0 e 1.
 
-# In[61]:
+# In[5]:
 
 
 def q5():
     total = black_friday.any(axis=1).sum() 
     nullLines = black_friday.isnull().any(axis=1).sum()
     return float(nullLines / total)
-    pass
 
 
 # ## Questão 6
 # 
 # Quantos valores null existem na variável (coluna) com o maior número de null? Responda como um único escalar.
 
-# In[62]:
+# In[6]:
 
 
 def q6():
@@ -110,42 +105,39 @@ def q6():
         if (maxNulls < rowSum):
             maxNulls = rowSum
     return int(maxNulls)
-    pass
 
 
 # ## Questão 7
 # 
 # Qual o valor mais frequente (sem contar nulls) em `Product_Category_3`? Responda como um único escalar.
 
-# In[65]:
+# In[7]:
 
 
 def q7():
     # retorna um Pandas Series ordenada pelo valor mais recorrente
     count = black_friday['Product_Category_3'].value_counts()
     return count.first_valid_index()
-    pass
 
 
 # ## Questão 8
 # 
 # Qual a nova média da variável (coluna) `Purchase` após sua normalização? Responda como um único escalar.
 
-# In[66]:
+# In[8]:
 
 
 def q8():
     column = black_friday['Purchase']
     normalized = (column - min(column)) / (max(column) - min(column))
     return normalized.mean()
-    pass
 
 
 # ## Questão 9
 # 
 # Quantas ocorrências entre -1 e 1 inclusive existem da variáel `Purchase` após sua padronização? Responda como um único escalar.
 
-# In[67]:
+# In[9]:
 
 
 def q9():
@@ -153,14 +145,13 @@ def q9():
     standardized = (column - column.mean()) / column.std()
     df_standard = pd.DataFrame(standardized.sort_values())
     return len(df_standard.query('Purchase >= -1 and Purchase <= 1'))
-    pass
 
 
 # ## Questão 10
 # 
 # Podemos afirmar que se uma observação é null em `Product_Category_2` ela também o é em `Product_Category_3`? Responda com um bool (`True`, `False`).
 
-# In[97]:
+# In[10]:
 
 
 def q10():
@@ -169,5 +160,4 @@ def q10():
     count_pc2 = len(dfpc.query('Product_Category_2 == True'))
     count_both = len(dfpc.query('Product_Category_2 == True and Product_Category_3 == True'))
     return bool(count_pc2 == count_both)
-    pass
 
